@@ -282,8 +282,28 @@ class Component extends DCLogic {
   toggleCheck(id) {
     this.setState(s => ({ checked: { ...s.checked, [id]: !s.checked[id] } }));
   }
-  submitCommitment() {
-    this.setState({ submitMessage: 'Your commitment has been saved. Shabbat Shalom.' });
+  async submitCommitment() {
+    if (!this.state.email) {
+      this.setState({ submitMessage: 'Please enter your email.' });
+      return;
+    }
+    this.setState({ submitMessage: 'Saving…' });
+    try {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: this.state.name,
+          email: this.state.email,
+          commitmentText: this.state.commitmentText,
+          dateVal: this.state.dateVal,
+        }),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      this.setState({ submitMessage: 'Your commitment has been saved. Shabbat Shalom.' });
+    } catch (err) {
+      this.setState({ submitMessage: 'Something went wrong — please try again.' });
+    }
   }
   toggleFaq(id) {
     this.setState(s => ({ openFaqs: { ...s.openFaqs, [id]: !s.openFaqs[id] } }));
