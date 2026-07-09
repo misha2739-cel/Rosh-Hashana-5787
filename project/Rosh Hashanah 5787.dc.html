@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    body { margin:0; background:#14110d; }
+    ::selection { background:#c9a24b; color:#14110d; }
+  </style>
+</helmet>
+
+<div style="background:#14110d; min-height:100vh; font-family:'Montserrat',sans-serif; color:#f5f0e6;">
+
+  <!-- NAV -->
+  <div style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 40px; background:rgba(20,17,13,0.92); backdrop-filter:blur(6px); border-bottom:1px solid #2a2319;">
+    <div onClick="{{ goHome }}" style="font-family:'Cinzel',serif; font-size:20px; letter-spacing:0.04em; color:#e8d9a8; cursor:pointer;">5787</div>
+    <div style="display:flex; gap:28px; flex-wrap:wrap;">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
+        <div onClick="{{ item.onClick }}" style="cursor:pointer; font-size:14px; letter-spacing:0.02em; padding-bottom:4px; color:{{ item.color }}; border-bottom:2px solid {{ item.underline }};">{{ item.label }}</div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Home" style="animation:fadeUp 0.5s ease;">
+
+      <div style="position:relative; min-height:92vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:140px 32px 100px; background-image:linear-gradient(180deg, rgba(10,8,6,0.35) 0%, rgba(12,9,7,0.55) 45%, #14110d 96%), url('assets/jerusalem-hero.png'); background-size:cover; background-position:center 35%; background-attachment:fixed; background-repeat:no-repeat;">
+        <div style="max-width:780px;">
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.28em; text-transform:uppercase; color:#e8d9a8; margin-bottom:26px; text-shadow:0 2px 12px rgba(0,0,0,0.6);">Rosh Hashanah 5787 · An Awareness Message</div>
+          <div style="font-family:'Cinzel',serif; font-weight:600; font-size:56px; line-height:1.2; color:#faf6ec; text-shadow:0 4px 24px rgba(0,0,0,0.75), 0 2px 6px rgba(0,0,0,0.6);">Can We Avoid Another Year of Catastrophe?</div>
+          <div style="margin-top:26px; font-size:18px; line-height:1.65; color:#efe9da; font-weight:300; text-shadow:0 2px 10px rgba(0,0,0,0.7); max-width:620px; margin-left:auto; margin-right:auto;">This year, the first day of Rosh Hashanah falls on Shabbos. Nine times in the last thirty years that has happened — and nine times, catastrophe followed.</div>
+        </div>
+      </div>
+
+      <div style="max-width:900px; margin:60px auto 0; padding:0 32px;">
+        <div style="position:relative; aspect-ratio:16/9; border-radius:4px; overflow:hidden; border:1px solid #3a3025; background-image:repeating-linear-gradient(45deg, #201a13, #201a13 12px, #241d15 12px, #241d15 24px); display:flex; align-items:center; justify-content:center;">
+          <div style="text-align:center;">
+            <div style="width:64px; height:64px; border-radius:50%; border:1.5px solid #c9a24b; display:flex; align-items:center; justify-content:center; margin:0 auto 14px;">
+              <div style="width:0; height:0; border-top:11px solid transparent; border-bottom:11px solid transparent; border-left:18px solid #c9a24b; margin-left:5px;"></div>
+            </div>
+            <div style="font-family:monospace; font-size:12px; color:#8d8270; letter-spacing:0.04em;">VIDEO — "Rosh Hashanah 5787" campaign message (16:9)</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:16px; justify-content:center; margin:34px 0 90px; flex-wrap:wrap;">
+        <div onClick="{{ goTeaching }}" style="cursor:pointer; padding:14px 30px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">Read the Teaching</div>
+        <div onClick="{{ goAction }}" style="cursor:pointer; padding:14px 30px; background:transparent; color:#e8d9a8; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border:1px solid #5a4a30; border-radius:2px;">Take Action for 5787</div>
+      </div>
+
+      <div style="border-top:1px solid #241d15; padding:70px 32px; text-align:center; background:#181310;">
+        <div style="font-family:'Cinzel',serif; font-style:normal; font-size:24px; line-height:1.6; max-width:640px; margin:0 auto; color:#e8d9a8;">"Any year in which the shofar is not sounded at its beginning — its end will be sounded with evil tidings."</div>
+        <div style="margin-top:14px; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#8d8270;">Rosh Hashana 16b</div>
+        <div onClick="{{ goTimeline }}" style="margin-top:36px; display:inline-block; cursor:pointer; font-size:13px; letter-spacing:0.04em; color:#c9a24b; border-bottom:1px solid #c9a24b; padding-bottom:2px;">See what happened the last nine times ↓</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- THE TEACHING -->
+  <sc-if value="{{ isTeaching }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="The Teaching" style="animation:fadeUp 0.5s ease; max-width:720px; margin:0 auto; padding:90px 32px 110px;">
+      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#b9ae9c; margin-bottom:18px;">Part I</div>
+      <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.2; margin-bottom:30px;">The Teaching</div>
+
+      <div style="font-size:17px; line-height:1.85; color:#d8cfbe; font-weight:300;">
+        <p>This coming Rosh Hashanah 5787, the shofar — yet again — will not be sounded on the first day because it's Shabbos. Our sages warned us</p>
+      </div>
+
+      <div style="margin:36px 0; padding:32px; background:#1c1712; border-left:2px solid #c9a24b;">
+        <div style="font-family:'Cinzel',serif; font-style:normal; font-size:22px; line-height:1.6; color:#e8d9a8;">"Any year in which the shofar is not sounded at its beginning — its end will be sounded with evil tidings."</div>
+        <div style="margin-top:12px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:#8d8270;">Talmud, Rosh Hashana 16b</div>
+      </div>
+
+      <div style="padding:26px 28px; background:#181310; border:1px dashed #3a3025; text-align:center; font-family:monospace; font-size:12px; color:#8d8270; letter-spacing:0.02em;">
+        SOURCE TEXT — original Gemara (Rosh Hashana 16b), Hebrew/Aramaic daf image or facsimile
+      </div>
+
+      <div style="font-size:17px; line-height:1.85; color:#d8cfbe; font-weight:300; margin-top:36px;">
+        <p>The historical record is striking, especially as it relates to modern history: September 11th, COVID-19, and October 7th all fell in years when the first day of Rosh Hashanah landed on Shabbos and no shofar was blown.</p>
+        <p style="color:#e8d9a8;">So what should we do, or what can we do, to minimize or remove the "evil tidings" all together?</p>
+        <p>While many do not realize this, there is in fact something which can be done in order to prevent the potential catastrophe that may occur.</p>
+        <p>The Aruch LaNer, written over 150 years ago, in <a href="https://www.sefaria.org/Minchat_Ani_on_Torah%2C_Ha'Azinu.17?lang=bi&with=all&lang2=en" target="_blank" rel="noopener" style="color:#c9a24b;">Al HaTorah on Parshas Ha'azinu 17</a>, tells us of years when the shofar wasn't blown on the first day of Rosh Hashanah, yet these same years produced the greatest miracles in Jewish history — and that what determines the outcome is one thing: a deeper commitment to Shabbos. This year, Shabbos is our shofar. The question is whether we will hear Shabbos, and fulfill our part of the commitment.</p>
+        <p>This project is meant to (a) create awareness that there IS something we can do to prevent another catastrophe (especially during a time of עת מלחמה) and (b) inspire our brothers and sisters with some practical, simple things they can do, each on his or her level, with a video and a call to action.</p>
+      </div>
+
+      <div onClick="{{ goTimeline }}" style="margin-top:20px; display:inline-block; cursor:pointer; font-size:13px; letter-spacing:0.04em; color:#c9a24b; border-bottom:1px solid #c9a24b; padding-bottom:2px;">This is not an empty warning — see the record →</div>
+    </div>
+  </sc-if>
+
+  <!-- TIMELINE -->
+  <sc-if value="{{ isTimeline }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="The Timeline" style="animation:fadeUp 0.5s ease; max-width:800px; margin:0 auto; padding:90px 32px 110px;">
+      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#b9ae9c; margin-bottom:18px;">Part II</div>
+      <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.2; margin-bottom:20px;">Thirty Years, Nine Silences</div>
+      <div style="font-size:17px; line-height:1.8; color:#d8cfbe; font-weight:300; margin-bottom:50px;">Besides the destruction of both Temples occurring in years like these — modern history proves the same, stark message. Take a look at the last thirty years: almost every time the first day of Rosh Hashanah fell on Shabbos, catastrophe followed.</div>
+
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <sc-for list="{{ timeline }}" as="row" hint-placeholder-count="8">
+          <div style="display:grid; grid-template-columns:120px 100px 1fr; gap:20px; padding:22px 22px; background:{{ row.bg }}; border-left:3px solid {{ row.color }};">
+            <div>
+              <div style="font-family:'Cinzel',serif; font-size:22px; color:#f5f0e6;">{{ row.year }}</div>
+              <div style="font-size:12px; color:#8d8270;">{{ row.greg }}</div>
+            </div>
+            <div style="font-size:12px; letter-spacing:0.04em; text-transform:uppercase; color:{{ row.color }}; align-self:start; margin-top:4px;">{{ row.character }}</div>
+            <div style="font-size:15px; line-height:1.6; color:#cfc5b3; font-weight:300;">{{ row.events }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:50px; text-align:center; font-family:'Cinzel',serif; font-style:normal; font-size:22px; color:#e8d9a8;">But that doesn't have to be.</div>
+      <div style="display:flex; justify-content:center; margin-top:26px;">
+        <div onClick="{{ goSolution }}" style="cursor:pointer; padding:14px 30px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">There Is Another Way →</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- THE SOLUTION -->
+  <sc-if value="{{ isSolution }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="The Solution" style="animation:fadeUp 0.5s ease; max-width:720px; margin:0 auto; padding:90px 32px 110px;">
+      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#c99a6b; margin-bottom:18px;">Part III</div>
+      <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.2; margin-bottom:30px;">Shabbos, Our Advocate</div>
+
+      <div style="font-size:17px; line-height:1.85; color:#d8cfbe; font-weight:300;">
+        <p>One hundred and fifty years ago, Rabbi Yaakov Ettlinger — the Aruch LaNer — revealed something extraordinary.</p>
+        <p>The year we were forgiven for the sin of the Golden Calf, the year the Mishkan was erected, and the year we entered the Land of Israel — all had one thing in common: the first day of Rosh Hashanah fell on Shabbos.</p>
+        <p style="color:#e8d9a8;">So what determines which year it will be?</p>
+      </div>
+
+      <div style="margin:36px 0; padding:32px; background:#1c1712; border-left:2px solid #b5652e;">
+        <div style="font-family:'Cinzel',serif; font-style:normal; font-size:21px; line-height:1.65; color:#e8c9a8;">"Shabbos is our partner. Our advocate before the Heavenly Court. On the day of judgment — when there is no shofar — Shabbos herself stands before the King and pleads our case."</div>
+        <div style="margin-top:12px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:#a08a6f;">Aruch LaNer</div>
+      </div>
+
+      <div style="padding:26px 28px; background:#181310; border:1px dashed #3a3025; text-align:center; font-family:monospace; font-size:12px; color:#8d8270;">
+        SOURCE TEXT — Aruch LaNer, Minchas Ani, Parshas Ha'azinu
+      </div>
+
+      <div style="font-size:17px; line-height:1.85; color:#d8cfbe; font-weight:300; margin-top:36px;">
+        <p>But only if we have honored Shabbos. If we have protected Shabbos, cherished Shabbos, kept Shabbos — Shabbos becomes our defender. And when Shabbos defends us, the verdict is life, blessing, and success.</p>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin-top:30px;">
+        <div onClick="{{ goAction }}" style="cursor:pointer; padding:14px 30px; background:#b5652e; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">What Can I Do →</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- TAKE ACTION -->
+  <sc-if value="{{ isAction }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Take Action" style="animation:fadeUp 0.5s ease; max-width:760px; margin:0 auto; padding:90px 32px 110px;">
+      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#c99a6b; margin-bottom:18px;">Part IV</div>
+      <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.25; margin-bottom:6px;">My Shabbos Commitment</div>
+      <div style="font-family:'Cinzel',serif; font-weight:500; font-size:22px; color:#c99a6b; margin-bottom:22px;">for the Year 5787</div>
+      <div style="font-size:17px; line-height:1.8; color:#d8cfbe; font-weight:300; margin-bottom:50px;">Choose one commitment. Shabbos is waiting for you.</div>
+
+      <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="12">
+        <div style="margin-bottom:44px;">
+          <div style="font-family:'Cinzel',serif; font-size:20px; color:#e8d9a8; margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid #2a2319;">{{ cat.title }}</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ cat.items }}" as="item" hint-placeholder-count="4">
+              <div onClick="{{ item.toggle }}" style="cursor:pointer; display:flex; align-items:flex-start; gap:14px; padding:16px 18px; background:{{ item.bg }}; border:1px solid {{ item.border }}; border-radius:4px;">
+                <div style="width:19px; height:19px; border-radius:3px; border:1.5px solid {{ item.dotBorder }}; background:{{ item.dotFill }}; flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; font-size:12px; color:#14110d; font-weight:700;">{{ item.mark }}</div>
+                <div style="font-size:15px; line-height:1.55; color:{{ item.textColor }}; font-weight:300;">{{ item.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+
+      <div style="margin-top:20px;">
+        <div style="font-family:'Cinzel',serif; font-size:19px; color:#e8d9a8; margin-bottom:14px;">My commitment for 5787:</div>
+        <textarea value="{{ commitmentText }}" onChange="{{ setCommitmentText }}" placeholder="Write your commitment here..." style="width:100%; min-height:100px; box-sizing:border-box; background:#1c1712; border:1px solid #3a3025; border-radius:4px; padding:16px; color:#f5f0e6; font-family:'Montserrat',sans-serif; font-size:15px; font-weight:300; line-height:1.6; resize:vertical;"></textarea>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px;">
+        <div>
+          <div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8d8270; margin-bottom:8px;">Name</div>
+          <input type="text" value="{{ name }}" onChange="{{ setName }}" style="width:100%; box-sizing:border-box; background:#1c1712; border:1px solid #3a3025; border-radius:4px; padding:12px 14px; color:#f5f0e6; font-family:'Montserrat',sans-serif; font-size:15px;"/>
+        </div>
+        <div>
+          <div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8d8270; margin-bottom:8px;">Date</div>
+          <input type="date" value="{{ dateVal }}" onChange="{{ setDate }}" style="width:100%; box-sizing:border-box; background:#1c1712; border:1px solid #3a3025; border-radius:4px; padding:12px 14px; color:#f5f0e6; font-family:'Montserrat',sans-serif; font-size:15px;"/>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8d8270; margin-bottom:8px;">Send this commitment to myself</div>
+        <input type="email" value="{{ email }}" onChange="{{ setEmail }}" placeholder="Enter your email here" style="width:100%; box-sizing:border-box; background:#1c1712; border:1px solid #3a3025; border-radius:4px; padding:12px 14px; color:#f5f0e6; font-family:'Montserrat',sans-serif; font-size:15px;"/>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin-top:40px;">
+        <div onClick="{{ submitCommitment }}" style="cursor:pointer; padding:14px 30px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">Save My Commitment</div>
+      </div>
+
+      <div style="margin-top:16px; text-align:center; font-size:14px; color:#c9a24b; font-style:italic; font-family:'Cinzel',serif;">{{ submitMessage }}</div>
+
+      <div style="margin-top:60px; text-align:center; font-family:'Cinzel',serif; font-size:20px; color:#e8d9a8;">Shabbat Shalom. Shanah Tovah.</div>
+
+      <div style="display:flex; justify-content:center; margin-top:36px;">
+        <div onClick="{{ goFaqs }}" style="cursor:pointer; padding:14px 30px; background:#b5652e; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">Questions? See the FAQs →</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FAQS -->
+  <sc-if value="{{ isFaqs }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="FAQs" style="animation:fadeUp 0.5s ease; max-width:760px; margin:0 auto; padding:90px 32px 110px;">
+      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#c99a6b; margin-bottom:18px;">Questions & Answers</div>
+      <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.2; margin-bottom:44px;">Frequently Asked Questions</div>
+
+      <div style="display:flex; flex-direction:column; gap:2px;">
+        <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="6">
+          <div style="border-bottom:1px solid #2a2319;">
+            <div onClick="{{ faq.toggle }}" style="cursor:pointer; display:flex; align-items:center; gap:18px; padding:22px 4px;">
+              <div style="flex-shrink:0; width:30px; height:30px; border-radius:50%; border:1.5px solid {{ faq.iconBorder }}; background:{{ faq.iconBg }}; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:18px; color:{{ faq.iconColor }}; transition:transform 0.25s ease; transform:{{ faq.iconRotate }};">{{ faq.icon }}</div>
+              <div style="font-family:'Cinzel',serif; font-size:17px; line-height:1.5; color:#f5f0e6;">{{ faq.question }}</div>
+            </div>
+            <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:0 4px 26px 48px; font-size:15px; line-height:1.75; color:#d8cfbe; font-weight:300; max-width:680px;">{{ faq.answer }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:50px; text-align:center; font-size:16px; color:#c9bfa9; font-weight:300;">Thank you for your participation and interest!</div>
+
+      <div style="display:flex; justify-content:center; margin-top:36px;">
+        <div onClick="{{ goShare }}" style="cursor:pointer; padding:14px 30px; background:#b5652e; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">Share This Message →</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- SHARE / ABOUT -->
+  <sc-if value="{{ isShare }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Share" style="animation:fadeUp 0.5s ease;">
+      <div style="max-width:640px; margin:0 auto; padding:110px 32px 60px; text-align:center;">
+        <div style="font-family:'Cinzel',serif; font-style:normal; font-weight:500; font-size:34px; line-height:1.4; color:#e8d9a8;">Shabbos is waiting for us.</div>
+        <div style="font-family:'Cinzel',serif; font-weight:700; font-size:46px; margin-top:18px; color:#f5f0e6;">Shanah Tovah.</div>
+      </div>
+
+      <div style="display:flex; gap:14px; justify-content:center; margin:30px 0 90px; flex-wrap:wrap;">
+        <div style="cursor:pointer; padding:13px 26px; background:#1c1712; color:#e8d9a8; font-size:14px; border:1px solid #3a3025; border-radius:2px;">Share on WhatsApp</div>
+        <div style="cursor:pointer; padding:13px 26px; background:#1c1712; color:#e8d9a8; font-size:14px; border:1px solid #3a3025; border-radius:2px;">Send by Email</div>
+        <div style="cursor:pointer; padding:13px 26px; background:#1c1712; color:#e8d9a8; font-size:14px; border:1px solid #3a3025; border-radius:2px;">Copy Link</div>
+      </div>
+
+      <div style="border-top:1px solid #241d15; padding:70px 32px; background:#181310;">
+        <div style="max-width:640px; margin:0 auto;">
+          <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#b9ae9c; margin-bottom:16px;">About This Campaign</div>
+          <div style="font-size:16px; line-height:1.8; color:#c9bfa9; font-weight:300;">This site accompanies a short film released ahead of Rosh Hashanah 5787, sharing a teaching from the Aruch LaNer on the unique power of Shabbos in a year when the first day of Rosh Hashanah falls on Shabbos itself. Watch, share, and take one small step for Shabbos this year.</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    page: 'home',
+    checked: {},
+    commitmentText: '',
+    name: '',
+    dateVal: '',
+    email: '',
+    submitMessage: '',
+    openFaqs: {},
+  };
+
+  setPage(p) { this.setState({ page: p }); }
+  toggleCheck(id) {
+    this.setState(s => ({ checked: { ...s.checked, [id]: !s.checked[id] } }));
+  }
+  submitCommitment() {
+    this.setState({ submitMessage: 'Your commitment has been saved. Shabbat Shalom.' });
+  }
+  toggleFaq(id) {
+    this.setState(s => ({ openFaqs: { ...s.openFaqs, [id]: !s.openFaqs[id] } }));
+  }
+
+  renderVals() {
+    const p = this.state.page;
+    const gold = '#c9a24b';
+
+    const pageList = [
+      { id: 'home', label: 'Home' },
+      { id: 'teaching', label: 'The Teaching' },
+      { id: 'timeline', label: 'The Timeline' },
+      { id: 'solution', label: 'The Solution' },
+      { id: 'action', label: 'Take Action' },
+      { id: 'faqs', label: 'FAQs' },
+      { id: 'share', label: 'Share' },
+    ];
+    const navItems = pageList.map(pg => ({
+      label: pg.label,
+      onClick: () => this.setPage(pg.id),
+      color: pg.id === p ? gold : '#cfc5b3',
+      underline: pg.id === p ? gold : 'transparent',
+    }));
+
+    const rawTimeline = [
+      { year: '5761', greg: 'Sept 2000 — Sept 2001', character: 'Catastrophic', events: 'September 11 attacks — worst terror attack in history; Second Intifada at its bloodiest; dot-com crash devastated global markets; anthrax attacks in the US.' },
+      { year: '5763', greg: 'Sept 2002 — Sept 2003', character: 'Tragic', events: 'Iraq War began; SARS epidemic; height of the Second Intifada with mass-casualty bombings in Israel.' },
+      { year: '5764', greg: 'Sept 2003 — Sept 2004', character: 'Tragic', events: 'Madrid train bombings (191 killed); Iraq War insurgency; Bam earthquake in Iran (~26,000 killed); ongoing Second Intifada and al-Qaeda attacks.' },
+      { year: '5767', greg: 'Sept 2006 — Sept 2007', character: 'Tragic', events: 'Second Lebanon War had just ended with heavy casualties; Virginia Tech massacre; Iranian nuclear standoff escalated.' },
+      { year: '5770', greg: 'Sept 2009 — Sept 2010', character: 'Tragic', events: 'Haiti earthquake (~230,000 killed); global financial crisis; H1N1 pandemic declared; aftermath of Operation Cast Lead in Gaza.' },
+      { year: '5781', greg: 'Sept 2020 — Sept 2021', character: 'Catastrophic', events: 'COVID-19 pandemic — millions of deaths, global lockdowns.' },
+      { year: '5784', greg: 'Sept 2023 — Sept 2024', character: 'Catastrophic', events: 'October 7 Hamas massacre — worst attack on Jews since the Holocaust; Gaza War; first-ever direct Iranian missile/drone attack on Israel.' },
+      { year: '5787', greg: 'Sept 2026 — Sept 2027', character: '?', events: '???' },
+    ];
+    const timeline = rawTimeline.map(row => {
+      const upcoming = row.character === '?';
+      const color = upcoming ? '#c9a24b' : (row.character === 'Catastrophic' ? '#b5453a' : '#a08a6f');
+      return { ...row, color, bg: upcoming ? '#241a10' : '#1c1712' };
+    });
+
+    const rawCategories = [
+      { title: "Uvdin D'Chol — No Weekday Activities", items: [
+        'Commit to leave your phone off Friday night of Shabbos',
+        'Commit to leave your phone off Shabbos Day',
+        'For the entire Shabbos, what would it feel like to leave your phone in another room — the whole time?',
+        'See if you can let work, business, and finances stay completely outside — from candle-lighting until Havdalah',
+        'News, emails, social media — they will all be there after Shabbos. This week, try letting them wait',
+        'Leave smoking — no smoking for one full Shabbos',
+      ]},
+      { title: 'Hadlakas Neiros — Lighting Shabbos Candles', items: [
+        'This week, try lighting Shabbos candles on time — before sunset, even just a few minutes earlier than usual',
+        'Consider adding one extra candle — in honor of a loved one, or for the merit of all of Klal Yisroel',
+        'Take a moment after covering your eyes to recite the blessing slowly — letting the words sink in before rushing back to the table',
+      ]},
+      { title: 'Kiddush — Sanctifying the Day', items: [
+        'If you usually listen to someone else, maybe this week is the week you make Kiddush yourself on Friday night',
+        'Before Shabbos, look up the meaning of just one paragraph of Kiddush — it might change the way you say it forever',
+        'Did you know there is a Kiddush on Shabbos morning too? — a beautiful, often overlooked mitzvah worth trying',
+      ]},
+      { title: 'Shmiras HaLashon b\u2019Shabbos — Guarding Your Speech', items: [
+        'What if, just for the hours of Shabbos, you gave everyone around you the gift of only kind words?',
+        'If a conversation at the table starts drifting somewhere negative — you could be the one who gently steers it somewhere better',
+      ]},
+      { title: 'Kibud Shabbos b\u2019Levush — Dressing for Shabbos', items: [
+        'There is something truly special about having clothes reserved only for Shabbos — if you don\u2019t yet, this could be a lovely place to start',
+        'Try getting fully dressed for Shabbos before candle-lighting — so you step into the day already feeling its holiness',
+      ]},
+      { title: 'Seudas Shabbos — The Shabbos Meals', items: [
+        'Is there someone — a neighbor, a friend, someone alone — who might love a seat at your Shabbos table this week?',
+        'Imagine beginning Friday night with Shalom Aleichem and Eishes Chayil sung together — even softly, even imperfectly',
+        'Seudah Shlishis, the third Shabbos meal on Saturday afternoon, is one most people quietly skip — this week could be different',
+        'Even one line of Torah shared at the table can transform an ordinary meal into something sacred',
+      ]},
+      { title: 'Oneg Shabbos — Delighting in Shabbos', items: [
+        'What if you gave yourself permission to rest on Shabbos afternoon — truly rest, for a full hour, just because Shabbos asks you to?',
+        'At some point during the meal, you might try singing one Shabbos zemer together — it does something to the room that nothing else can',
+        'A slow, unhurried Shabbos walk — no destination, no podcast, no agenda — can be one of the most restorative things you do all week',
+      ]},
+      { title: 'Limud Torah b\u2019Shabbos — Torah Learning on Shabbos', items: [
+        'How about learning just one Mishnah this Shabbos — and taking a few minutes to understand what it is actually saying?',
+        'You might enjoy looking up one halacha that is relevant to something in your everyday life',
+        'Before or after the meal, reading one short idea connected to the weekly parashah can open up a beautiful conversation',
+        'Pirkei Avos — the Ethics of the Fathers — has a beloved tradition of being learned on Shabbos afternoons. Even one chapter is a gift',
+        'This Shabbos could be a chance to learn something about Shabbos itself — its meaning, its depth, or one of its beautiful laws',
+      ]},
+      { title: 'Birkas HaMazon — Bentching After the Meal', items: [
+        'After each Shabbos meal, try picking up a bentcher and reciting Birkas HaMazon out loud — not from memory on autopilot',
+        'In the paragraph of Nodeh Lecha — "We give thanks to You, Hashem" — try pausing for just a moment to actually feel what you are saying',
+        'The paragraph of Retzeh is the special Shabbos addition to bentching — a small but meaningful moment worth slowing down for',
+        'If your family or friends could bentch together out loud, even once this Shabbos — it becomes something entirely different',
+      ]},
+      { title: 'Tefillah b\u2019Tzibbur — Shabbos Prayer', items: [
+        'If it has been a while since you davened in shul on Shabbos morning — this week might be a wonderful time to go',
+        'Arriving before Barchu — just a few minutes earlier than usual — can completely change the feeling of the whole davening',
+        'During the Torah reading, following along in the Chumash, even for a few aliyos, can make the experience feel alive in a new way',
+        'Choose just one prayer this Shabbos — maybe Ashrei, or the Amidah — and say it slowly, word by word, as if for the first time',
+      ]},
+      { title: 'Havdalah — Separating the Sacred from the Ordinary', items: [
+        'Havdalah at the right time, over a cup of wine, with the braided candle and spices — one of the most beautiful rituals in Jewish life, worth doing in full',
+        'When you smell the besamim, the spices, the Sages say it is actually comforting the soul as Shabbos departs — let yourself feel that',
+        'If there is a child nearby, inviting them to hold the candle or follow along with Havdalah could be something they carry with them for life',
+      ]},
+      { title: 'Kibud Av Va\u2019em b\u2019Shabbos — Honoring Parents on Shabbos', items: [
+        'Shabbos is one of the most natural times to reach out to a parent — a call, a visit, or even just a warm thought in their direction',
+        'Using the Shabbos table as a space to be genuinely, fully present with the people you love — no rushing, no distraction — is itself a profound act of honor',
+      ]},
+    ];
+
+    const categories = rawCategories.map((cat, ci) => ({
+      title: cat.title,
+      items: cat.items.map((label, ii) => {
+        const id = 'c' + ci + '_' + ii;
+        const selected = !!this.state.checked[id];
+        return {
+          label,
+          toggle: () => this.toggleCheck(id),
+          bg: selected ? '#2a2013' : '#1c1712',
+          border: selected ? '#b5652e' : '#2a2319',
+          dotBorder: selected ? '#b5652e' : '#5a4a30',
+          dotFill: selected ? '#c9a24b' : 'transparent',
+          mark: selected ? '\u2713' : '',
+          textColor: selected ? '#f5f0e6' : '#cfc5b3',
+        };
+      }),
+    }));
+
+    const rawFaqs = [
+      { q: 'Why are we doing this project?', a: 'This coming Rosh Hashanah 5787, the shofar — yet again — will not be sounded on the first day because it\u2019s Shabbos. Our sages warned us over two thousand years ago in the Talmud (Rosh Hashana 16b) that any year the shofar is silent at its beginning will be sounded with evil tidings at its end. The historical record is striking: September 11th, COVID-19, and October 7th all fell in years when Rosh Hashanah landed on Shabbos and no shofar was blown (these are just some of the most catastrophic event examples, but there are plenty more). This project is meant to (a) create awareness that there IS something we can do to prevent another catastrophe and (b) inspire our brothers and sisters with some practical, simple things they can do, each on his or her level, with a video and a call to action.' },
+      { q: 'Isn\u2019t it a contradiction for the rabbis to decree a law which will inevitably bring bad tidings? Why would the rabbis do that?', a: 'No. As the Aruch LaNer points out, "when our Sages forbade blowing the shofar on Shabbos, this was to distance us from desecrating Shabbos, lest one inadvertently carry it four cubits in a public domain" (Minchas Ani al HaTorah). This law isn\u2019t creating a dangerous situation; it\u2019s simply providing a safeguard from unintentional Shabbos transgression, and more importantly to teach us how special Shabbos is, in order to learn and be more careful about how we conduct ourselves on Shabbos. But when Shabbos is desecrated all year long, "then not only does Shabbos fail to become our advocate, but since the Accuser was never confounded [by the shofar], we must fear the words of Rabbi Yitzchak: \u2018Any year in which the shofar is not blown at its beginning is dealt with harshly at its end.\u2019"' },
+      { q: 'Doesn\u2019t tragedy happen in other years too — like the 2004 Indian Ocean Tsunami, which wasn\u2019t a year when Rosh Hashanah fell on Shabbos?', a: 'Yes — and that\u2019s a fair and important question. The claim isn\u2019t that catastrophe is exclusive to these years. Difficult events happen in every era. The teaching is that years without the shofar\u2019s sounding on Day One are years where the Jewish people may be missing a specific source of spiritual protection — making them more exposed, not necessarily the only years anything difficult can occur.' },
+      { q: 'What makes the Shabbos-Rosh Hashanah years different from other tragic years, then?', a: 'Many of the events that occurred in these years were historically unprecedented in their category and struck the Jewish people in particular: the worst terror attack in modern history (9/11), the worst global pandemic in a century (COVID-19), and the worst single-day massacre of Jews since the Holocaust (October 7). The framework is especially concerned with events that carry weight for Klal Yisroel — not simply "did something bad happen somewhere in the world this year."' },
+      { q: 'Isn\u2019t this just confirmation bias — noticing the pattern only when it\u2019s convenient?', a: 'Great question! This project is meant to be a call to introspection. However, a pattern doesn\u2019t need to apply with complete, exception-free consistency to be meaningful. This isn\u2019t presented as a predictive formula or statistical proof. Regardless of how anyone weighs the historical pattern, the message stands on its own: there is something concrete and meaningful we can do about the warnings presented to us regarding years where the first day of Rosh Hashanah falls on Shabbos — to strengthen our relationship with Shabbos. That\u2019s true whether or not one finds the historical correlation fully convincing, or not.' },
+      { q: 'Why now?', a: 'Now more than ever, the Jewish world, and the world at large, is living in unprecedented times and facing an \u05e2\u05ea \u05de\u05dc\u05d7\u05de\u05d4 — a time of war. This is why today — more than ever before — this project is relevant. If there is ever a time when taking on one small thing can create extra spiritual protection, this is the time.' },
+    ];
+    const faqs = rawFaqs.map((f, i) => {
+      const open = !!this.state.openFaqs[i];
+      return {
+        question: f.q,
+        answer: f.a,
+        open,
+        icon: '+',
+        iconRotate: open ? 'rotate(135deg)' : 'rotate(0deg)',
+        iconBorder: open ? '#c9a24b' : '#5a4a30',
+        iconBg: open ? '#c9a24b' : 'transparent',
+        iconColor: open ? '#14110d' : '#c9a24b',
+        toggle: () => this.toggleFaq(i),
+      };
+    });
+
+    return {
+      isHome: p === 'home', isTeaching: p === 'teaching', isTimeline: p === 'timeline',
+      isSolution: p === 'solution', isAction: p === 'action', isFaqs: p === 'faqs', isShare: p === 'share',
+      goHome: () => this.setPage('home'),
+      goTeaching: () => this.setPage('teaching'),
+      goTimeline: () => this.setPage('timeline'),
+      goSolution: () => this.setPage('solution'),
+      goAction: () => this.setPage('action'),
+      goFaqs: () => this.setPage('faqs'),
+      goShare: () => this.setPage('share'),
+      faqs,
+      navItems, timeline, categories,
+      commitmentText: this.state.commitmentText,
+      setCommitmentText: (e) => this.setState({ commitmentText: e.target.value }),
+      name: this.state.name,
+      setName: (e) => this.setState({ name: e.target.value }),
+      dateVal: this.state.dateVal,
+      setDate: (e) => this.setState({ dateVal: e.target.value }),
+      email: this.state.email,
+      setEmail: (e) => this.setState({ email: e.target.value }),
+      submitCommitment: () => this.submitCommitment(),
+      submitMessage: this.state.submitMessage,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
