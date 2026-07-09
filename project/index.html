@@ -118,38 +118,7 @@
 
       <div style="margin-top:50px; text-align:center; font-family:'Cinzel',serif; font-style:normal; font-size:22px; color:#e8d9a8;">But that doesn't have to be.</div>
       <div style="display:flex; justify-content:center; margin-top:26px;">
-        <div onClick="{{ goSolution }}" style="cursor:pointer; padding:14px 30px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">There Is Another Way →</div>
-      </div>
-    </div>
-  </sc-if>
-
-  <!-- THE SOLUTION -->
-  <sc-if value="{{ isSolution }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="The Solution" style="animation:fadeUp 0.5s ease; max-width:720px; margin:0 auto; padding:90px 32px 110px;">
-      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#c99a6b; margin-bottom:18px;">Part III</div>
-      <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.2; margin-bottom:30px;">Shabbos, Our Advocate</div>
-
-      <div style="font-size:17px; line-height:1.85; color:#d8cfbe; font-weight:300;">
-        <p>One hundred and fifty years ago, Rabbi Yaakov Ettlinger — the Aruch LaNer — revealed something extraordinary.</p>
-        <p>The year we were forgiven for the sin of the Golden Calf, the year the Mishkan was erected, and the year we entered the Land of Israel — all had one thing in common: the first day of Rosh Hashanah fell on Shabbos.</p>
-        <p style="color:#e8d9a8;">So what determines which year it will be?</p>
-      </div>
-
-      <div style="margin:36px 0; padding:32px; background:#1c1712; border-left:2px solid #b5652e;">
-        <div style="font-family:'Cinzel',serif; font-style:normal; font-size:21px; line-height:1.65; color:#e8c9a8;">"Shabbos is our partner. Our advocate before the Heavenly Court. On the day of judgment — when there is no shofar — Shabbos herself stands before the King and pleads our case."</div>
-        <div style="margin-top:12px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:#a08a6f;">Aruch LaNer</div>
-      </div>
-
-      <div style="padding:26px 28px; background:#181310; border:1px dashed #3a3025; text-align:center; font-family:monospace; font-size:12px; color:#8d8270;">
-        SOURCE TEXT — Aruch LaNer, Minchas Ani, Parshas Ha'azinu
-      </div>
-
-      <div style="font-size:17px; line-height:1.85; color:#d8cfbe; font-weight:300; margin-top:36px;">
-        <p>But only if we have honored Shabbos. If we have protected Shabbos, cherished Shabbos, kept Shabbos — Shabbos becomes our defender. And when Shabbos defends us, the verdict is life, blessing, and success.</p>
-      </div>
-
-      <div style="display:flex; justify-content:center; margin-top:30px;">
-        <div onClick="{{ goAction }}" style="cursor:pointer; padding:14px 30px; background:#b5652e; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">What Can I Do →</div>
+        <div onClick="{{ goAction }}" style="cursor:pointer; padding:14px 30px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">There Is Another Way →</div>
       </div>
     </div>
   </sc-if>
@@ -157,7 +126,7 @@
   <!-- TAKE ACTION -->
   <sc-if value="{{ isAction }}" hint-placeholder-val="{{ false }}">
     <div data-screen-label="Take Action" style="animation:fadeUp 0.5s ease; max-width:760px; margin:0 auto; padding:90px 32px 110px;">
-      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#c99a6b; margin-bottom:18px;">Part IV</div>
+      <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#c99a6b; margin-bottom:18px;">Part III</div>
       <div style="font-family:'Cinzel',serif; font-weight:600; font-size:38px; line-height:1.25; margin-bottom:6px;">My Shabbos Commitment</div>
       <div style="font-family:'Cinzel',serif; font-weight:500; font-size:22px; color:#c99a6b; margin-bottom:22px;">for the Year 5787</div>
       <div style="font-size:17px; line-height:1.8; color:#d8cfbe; font-weight:300; margin-bottom:50px;">Choose one commitment. Shabbos is waiting for you.</div>
@@ -317,7 +286,6 @@ class Component extends DCLogic {
       { id: 'home', label: 'Home' },
       { id: 'teaching', label: 'The Teaching' },
       { id: 'timeline', label: 'The Timeline' },
-      { id: 'solution', label: 'The Solution' },
       { id: 'action', label: 'Take Action' },
       { id: 'faqs', label: 'FAQs' },
       { id: 'share', label: 'Share' },
@@ -456,11 +424,10 @@ class Component extends DCLogic {
 
     return {
       isHome: p === 'home', isTeaching: p === 'teaching', isTimeline: p === 'timeline',
-      isSolution: p === 'solution', isAction: p === 'action', isFaqs: p === 'faqs', isShare: p === 'share',
+      isAction: p === 'action', isFaqs: p === 'faqs', isShare: p === 'share',
       goHome: () => this.setPage('home'),
       goTeaching: () => this.setPage('teaching'),
       goTimeline: () => this.setPage('timeline'),
-      goSolution: () => this.setPage('solution'),
       goAction: () => this.setPage('action'),
       goFaqs: () => this.setPage('faqs'),
       goShare: () => this.setPage('share'),
