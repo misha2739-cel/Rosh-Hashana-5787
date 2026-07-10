@@ -157,7 +157,7 @@
         </div>
         <div>
           <div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8d8270; margin-bottom:8px;">Date</div>
-          <input type="date" value="{{ dateVal }}" onChange="{{ setDate }}" style="width:100%; box-sizing:border-box; background:#1c1712; border:1px solid #3a3025; border-radius:4px; padding:12px 14px; color:#f5f0e6; font-family:'Montserrat',sans-serif; font-size:15px;"/>
+          <input type="date" value="{{ dateVal }}" min="{{ dateMin }}" onChange="{{ setDate }}" style="width:100%; box-sizing:border-box; background:#1c1712; border:1px solid #3a3025; border-radius:4px; padding:12px 14px; color:#f5f0e6; font-family:'Montserrat',sans-serif; font-size:15px;"/>
         </div>
       </div>
 
@@ -241,11 +241,18 @@ class Component extends DCLogic {
     checked: {},
     commitmentText: '',
     name: '',
-    dateVal: '',
+    dateVal: this.todayISO(),
     email: '',
     submitMessage: '',
     openFaqs: {},
   };
+
+  todayISO() {
+    const d = new Date();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${m}-${day}`;
+  }
 
   setPage(p) { this.setState({ page: p }); }
   toggleCheck(id) {
@@ -438,6 +445,7 @@ class Component extends DCLogic {
       name: this.state.name,
       setName: (e) => this.setState({ name: e.target.value }),
       dateVal: this.state.dateVal,
+      dateMin: this.todayISO(),
       setDate: (e) => this.setState({ dateVal: e.target.value }),
       email: this.state.email,
       setEmail: (e) => this.setState({ email: e.target.value }),
