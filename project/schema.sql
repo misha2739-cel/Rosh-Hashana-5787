@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS signups (
   email TEXT NOT NULL,
   commitment TEXT,
   date_val TEXT,
+  commitments TEXT,
   created_at TEXT NOT NULL
 );

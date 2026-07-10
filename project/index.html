@@ -170,6 +170,8 @@
         <div onClick="{{ submitCommitment }}" style="cursor:pointer; padding:14px 30px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">Save My Commitment</div>
       </div>
 
+      <div style="margin-top:12px; text-align:center; font-size:12px; color:#8d8270; font-weight:300;">Click here to send yourself an email with your Shabbos commitment(s) for year 5787</div>
+
       <div style="margin-top:16px; text-align:center; font-size:14px; color:#c9a24b; font-style:italic; font-family:'Cinzel',serif;">{{ submitMessage }}</div>
 
       <div style="margin-top:60px; text-align:center; font-family:'Cinzel',serif; font-size:20px; color:#e8d9a8;">Shabbat Shalom. Shanah Tovah.</div>
@@ -202,6 +204,8 @@
 
       <div style="margin-top:50px; text-align:center; font-size:16px; color:#c9bfa9; font-weight:300;">Thank you for your participation and interest!</div>
 
+      <div style="margin-top:24px; text-align:center; font-size:15px; color:#c9bfa9; font-weight:300;">Got questions? <a href="mailto:roshhashanah5787@gmail.com" style="color:#c9a24b;">Contact us</a></div>
+
       <div style="display:flex; justify-content:center; margin-top:36px;">
         <div onClick="{{ goShare }}" style="cursor:pointer; padding:14px 30px; background:#b5652e; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:0.06em; border-radius:2px;">Share This Message →</div>
       </div>
@@ -226,6 +230,7 @@
         <div style="max-width:640px; margin:0 auto;">
           <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#b9ae9c; margin-bottom:16px;">About This Campaign</div>
           <div style="font-size:16px; line-height:1.8; color:#c9bfa9; font-weight:300;">This site accompanies a short film released ahead of Rosh Hashanah 5787, sharing a teaching from the Aruch LaNer on the unique power of Shabbos in a year when the first day of Rosh Hashanah falls on Shabbos itself. Watch, share, and take one small step for Shabbos this year.</div>
+          <div style="margin-top:30px; font-size:15px; color:#c9bfa9; font-weight:300;">Got questions? <a href="mailto:roshhashanah5787@gmail.com" style="color:#c9a24b;">Contact us</a></div>
         </div>
       </div>
     </div>
@@ -254,6 +259,84 @@ class Component extends DCLogic {
     return `${d.getFullYear()}-${m}-${day}`;
   }
 
+  rawCategories = [
+    { title: "Uvdin D'Chol — No Weekday Activities", items: [
+      'Commit to leave your phone off Friday night of Shabbos',
+      'Commit to leave your phone off Shabbos Day',
+      'For the entire Shabbos, what would it feel like to leave your phone in another room — the whole time?',
+      'See if you can let work, business, and finances stay completely outside — from candle-lighting until Havdalah',
+      'News, emails, social media — they will all be there after Shabbos. This week, try letting them wait',
+      'Leave smoking — no smoking for one full Shabbos',
+    ]},
+    { title: 'Hadlakas Neiros — Lighting Shabbos Candles', items: [
+      'This week, try lighting Shabbos candles on time — before sunset, even just a few minutes earlier than usual',
+      'Consider adding one extra candle — in honor of a loved one, or for the merit of all of Klal Yisroel',
+      'Take a moment after covering your eyes to recite the blessing slowly — letting the words sink in before rushing back to the table',
+    ]},
+    { title: 'Kiddush — Sanctifying the Day', items: [
+      'If you usually listen to someone else, maybe this week is the week you make Kiddush yourself on Friday night',
+      'Before Shabbos, look up the meaning of just one paragraph of Kiddush — it might change the way you say it forever',
+      'Did you know there is a Kiddush on Shabbos morning too? — a beautiful, often overlooked mitzvah worth trying',
+    ]},
+    { title: 'Shmiras HaLashon b’Shabbos — Guarding Your Speech', items: [
+      'What if, just for the hours of Shabbos, you gave everyone around you the gift of only kind words?',
+      'If a conversation at the table starts drifting somewhere negative — you could be the one who gently steers it somewhere better',
+    ]},
+    { title: 'Kibud Shabbos b’Levush — Dressing for Shabbos', items: [
+      'There is something truly special about having clothes reserved only for Shabbos — if you don’t yet, this could be a lovely place to start',
+      'Try getting fully dressed for Shabbos before candle-lighting — so you step into the day already feeling its holiness',
+    ]},
+    { title: 'Seudas Shabbos — The Shabbos Meals', items: [
+      'Is there someone — a neighbor, a friend, someone alone — who might love a seat at your Shabbos table this week?',
+      'Imagine beginning Friday night with Shalom Aleichem and Eishes Chayil sung together — even softly, even imperfectly',
+      'Seudah Shlishis, the third Shabbos meal on Saturday afternoon, is one most people quietly skip — this week could be different',
+      'Even one line of Torah shared at the table can transform an ordinary meal into something sacred',
+    ]},
+    { title: 'Oneg Shabbos — Delighting in Shabbos', items: [
+      'What if you gave yourself permission to rest on Shabbos afternoon — truly rest, for a full hour, just because Shabbos asks you to?',
+      'At some point during the meal, you might try singing one Shabbos zemer together — it does something to the room that nothing else can',
+      'A slow, unhurried Shabbos walk — no destination, no podcast, no agenda — can be one of the most restorative things you do all week',
+    ]},
+    { title: 'Limud Torah b’Shabbos — Torah Learning on Shabbos', items: [
+      'How about learning just one Mishnah this Shabbos — and taking a few minutes to understand what it is actually saying?',
+      'You might enjoy looking up one halacha that is relevant to something in your everyday life',
+      'Before or after the meal, reading one short idea connected to the weekly parashah can open up a beautiful conversation',
+      'Pirkei Avos — the Ethics of the Fathers — has a beloved tradition of being learned on Shabbos afternoons. Even one chapter is a gift',
+      'This Shabbos could be a chance to learn something about Shabbos itself — its meaning, its depth, or one of its beautiful laws',
+    ]},
+    { title: 'Birkas HaMazon — Bentching After the Meal', items: [
+      'After each Shabbos meal, try picking up a bentcher and reciting Birkas HaMazon out loud — not from memory on autopilot',
+      'In the paragraph of Nodeh Lecha — "We give thanks to You, Hashem" — try pausing for just a moment to actually feel what you are saying',
+      'The paragraph of Retzeh is the special Shabbos addition to bentching — a small but meaningful moment worth slowing down for',
+      'If your family or friends could bentch together out loud, even once this Shabbos — it becomes something entirely different',
+    ]},
+    { title: 'Tefillah b’Tzibbur — Shabbos Prayer', items: [
+      'If it has been a while since you davened in shul on Shabbos morning — this week might be a wonderful time to go',
+      'Arriving before Barchu — just a few minutes earlier than usual — can completely change the feeling of the whole davening',
+      'During the Torah reading, following along in the Chumash, even for a few aliyos, can make the experience feel alive in a new way',
+      'Choose just one prayer this Shabbos — maybe Ashrei, or the Amidah — and say it slowly, word by word, as if for the first time',
+    ]},
+    { title: 'Havdalah — Separating the Sacred from the Ordinary', items: [
+      'Havdalah at the right time, over a cup of wine, with the braided candle and spices — one of the most beautiful rituals in Jewish life, worth doing in full',
+      'When you smell the besamim, the spices, the Sages say it is actually comforting the soul as Shabbos departs — let yourself feel that',
+      'If there is a child nearby, inviting them to hold the candle or follow along with Havdalah could be something they carry with them for life',
+    ]},
+    { title: 'Kibud Av Va’em b’Shabbos — Honoring Parents on Shabbos', items: [
+      'Shabbos is one of the most natural times to reach out to a parent — a call, a visit, or even just a warm thought in their direction',
+      'Using the Shabbos table as a space to be genuinely, fully present with the people you love — no rushing, no distraction — is itself a profound act of honor',
+    ]},
+  ];
+
+  getSelectedCommitments() {
+    const selected = [];
+    this.rawCategories.forEach((cat, ci) => {
+      cat.items.forEach((label, ii) => {
+        if (this.state.checked['c' + ci + '_' + ii]) selected.push(label);
+      });
+    });
+    return selected;
+  }
+
   setPage(p) { this.setState({ page: p }); }
   toggleCheck(id) {
     this.setState(s => ({ checked: { ...s.checked, [id]: !s.checked[id] } }));
@@ -273,10 +356,16 @@ class Component extends DCLogic {
           email: this.state.email,
           commitmentText: this.state.commitmentText,
           dateVal: this.state.dateVal,
+          commitments: this.getSelectedCommitments(),
         }),
       });
       if (!res.ok) throw new Error('Request failed');
-      this.setState({ submitMessage: 'Your commitment has been saved. Shabbat Shalom.' });
+      const data = await res.json();
+      if (data.emailSent === false) {
+        this.setState({ submitMessage: 'Your commitment has been saved, but the email could not be sent. Please try again later.' });
+      } else {
+        this.setState({ submitMessage: 'Your commitment has been saved. Check your email for your certificate. Shabbat Shalom.' });
+      }
     } catch (err) {
       this.setState({ submitMessage: 'Something went wrong — please try again.' });
     }
@@ -320,73 +409,7 @@ class Component extends DCLogic {
       return { ...row, color, bg: upcoming ? '#241a10' : '#1c1712' };
     });
 
-    const rawCategories = [
-      { title: "Uvdin D'Chol — No Weekday Activities", items: [
-        'Commit to leave your phone off Friday night of Shabbos',
-        'Commit to leave your phone off Shabbos Day',
-        'For the entire Shabbos, what would it feel like to leave your phone in another room — the whole time?',
-        'See if you can let work, business, and finances stay completely outside — from candle-lighting until Havdalah',
-        'News, emails, social media — they will all be there after Shabbos. This week, try letting them wait',
-        'Leave smoking — no smoking for one full Shabbos',
-      ]},
-      { title: 'Hadlakas Neiros — Lighting Shabbos Candles', items: [
-        'This week, try lighting Shabbos candles on time — before sunset, even just a few minutes earlier than usual',
-        'Consider adding one extra candle — in honor of a loved one, or for the merit of all of Klal Yisroel',
-        'Take a moment after covering your eyes to recite the blessing slowly — letting the words sink in before rushing back to the table',
-      ]},
-      { title: 'Kiddush — Sanctifying the Day', items: [
-        'If you usually listen to someone else, maybe this week is the week you make Kiddush yourself on Friday night',
-        'Before Shabbos, look up the meaning of just one paragraph of Kiddush — it might change the way you say it forever',
-        'Did you know there is a Kiddush on Shabbos morning too? — a beautiful, often overlooked mitzvah worth trying',
-      ]},
-      { title: 'Shmiras HaLashon b\u2019Shabbos — Guarding Your Speech', items: [
-        'What if, just for the hours of Shabbos, you gave everyone around you the gift of only kind words?',
-        'If a conversation at the table starts drifting somewhere negative — you could be the one who gently steers it somewhere better',
-      ]},
-      { title: 'Kibud Shabbos b\u2019Levush — Dressing for Shabbos', items: [
-        'There is something truly special about having clothes reserved only for Shabbos — if you don\u2019t yet, this could be a lovely place to start',
-        'Try getting fully dressed for Shabbos before candle-lighting — so you step into the day already feeling its holiness',
-      ]},
-      { title: 'Seudas Shabbos — The Shabbos Meals', items: [
-        'Is there someone — a neighbor, a friend, someone alone — who might love a seat at your Shabbos table this week?',
-        'Imagine beginning Friday night with Shalom Aleichem and Eishes Chayil sung together — even softly, even imperfectly',
-        'Seudah Shlishis, the third Shabbos meal on Saturday afternoon, is one most people quietly skip — this week could be different',
-        'Even one line of Torah shared at the table can transform an ordinary meal into something sacred',
-      ]},
-      { title: 'Oneg Shabbos — Delighting in Shabbos', items: [
-        'What if you gave yourself permission to rest on Shabbos afternoon — truly rest, for a full hour, just because Shabbos asks you to?',
-        'At some point during the meal, you might try singing one Shabbos zemer together — it does something to the room that nothing else can',
-        'A slow, unhurried Shabbos walk — no destination, no podcast, no agenda — can be one of the most restorative things you do all week',
-      ]},
-      { title: 'Limud Torah b\u2019Shabbos — Torah Learning on Shabbos', items: [
-        'How about learning just one Mishnah this Shabbos — and taking a few minutes to understand what it is actually saying?',
-        'You might enjoy looking up one halacha that is relevant to something in your everyday life',
-        'Before or after the meal, reading one short idea connected to the weekly parashah can open up a beautiful conversation',
-        'Pirkei Avos — the Ethics of the Fathers — has a beloved tradition of being learned on Shabbos afternoons. Even one chapter is a gift',
-        'This Shabbos could be a chance to learn something about Shabbos itself — its meaning, its depth, or one of its beautiful laws',
-      ]},
-      { title: 'Birkas HaMazon — Bentching After the Meal', items: [
-        'After each Shabbos meal, try picking up a bentcher and reciting Birkas HaMazon out loud — not from memory on autopilot',
-        'In the paragraph of Nodeh Lecha — "We give thanks to You, Hashem" — try pausing for just a moment to actually feel what you are saying',
-        'The paragraph of Retzeh is the special Shabbos addition to bentching — a small but meaningful moment worth slowing down for',
-        'If your family or friends could bentch together out loud, even once this Shabbos — it becomes something entirely different',
-      ]},
-      { title: 'Tefillah b\u2019Tzibbur — Shabbos Prayer', items: [
-        'If it has been a while since you davened in shul on Shabbos morning — this week might be a wonderful time to go',
-        'Arriving before Barchu — just a few minutes earlier than usual — can completely change the feeling of the whole davening',
-        'During the Torah reading, following along in the Chumash, even for a few aliyos, can make the experience feel alive in a new way',
-        'Choose just one prayer this Shabbos — maybe Ashrei, or the Amidah — and say it slowly, word by word, as if for the first time',
-      ]},
-      { title: 'Havdalah — Separating the Sacred from the Ordinary', items: [
-        'Havdalah at the right time, over a cup of wine, with the braided candle and spices — one of the most beautiful rituals in Jewish life, worth doing in full',
-        'When you smell the besamim, the spices, the Sages say it is actually comforting the soul as Shabbos departs — let yourself feel that',
-        'If there is a child nearby, inviting them to hold the candle or follow along with Havdalah could be something they carry with them for life',
-      ]},
-      { title: 'Kibud Av Va\u2019em b\u2019Shabbos — Honoring Parents on Shabbos', items: [
-        'Shabbos is one of the most natural times to reach out to a parent — a call, a visit, or even just a warm thought in their direction',
-        'Using the Shabbos table as a space to be genuinely, fully present with the people you love — no rushing, no distraction — is itself a profound act of honor',
-      ]},
-    ];
+    const rawCategories = this.rawCategories;
 
     const categories = rawCategories.map((cat, ci) => ({
       title: cat.title,
