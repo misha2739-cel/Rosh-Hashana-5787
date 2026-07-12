@@ -14,6 +14,8 @@
     @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
     body { margin:0; background:#14110d; }
     ::selection { background:#c9a24b; color:#14110d; }
+    .faq-icon { transition:transform 0.25s ease, border-color 0.2s ease, background-color 0.2s ease; }
+    .faq-icon:hover { border-color:#c9a24b; background-color:rgba(201,162,75,0.12); }
   </style>
 </helmet>
 
@@ -21,7 +23,7 @@
 
   <!-- NAV -->
   <div style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:18px 40px; background:rgba(20,17,13,0.92); backdrop-filter:blur(6px); border-bottom:1px solid #2a2319;">
-    <div onClick="{{ goHome }}" style="font-family:'Cinzel',serif; font-size:20px; letter-spacing:0.04em; color:#e8d9a8; cursor:pointer;">5787</div>
+    <div onClick="{{ goHome }}" style="font-family:'Cinzel',serif; font-size:20px; letter-spacing:0.04em; color:#e8d9a8; cursor:pointer; text-transform:uppercase;">Rosh Hashanah 5787</div>
     <div style="display:flex; gap:28px; flex-wrap:wrap;">
       <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
         <div onClick="{{ item.onClick }}" style="cursor:pointer; font-size:14px; letter-spacing:0.02em; padding-bottom:4px; color:{{ item.color }}; border-bottom:2px solid {{ item.underline }};">{{ item.label }}</div>
@@ -192,7 +194,7 @@
         <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="6">
           <div style="border-bottom:1px solid #2a2319;">
             <div onClick="{{ faq.toggle }}" style="cursor:pointer; display:flex; align-items:center; gap:18px; padding:22px 4px;">
-              <div style="flex-shrink:0; width:30px; height:30px; border-radius:50%; border:1.5px solid {{ faq.iconBorder }}; background:{{ faq.iconBg }}; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:18px; color:{{ faq.iconColor }}; transition:transform 0.25s ease; transform:{{ faq.iconRotate }};">{{ faq.icon }}</div>
+              <div class="faq-icon" style="flex-shrink:0; width:30px; height:30px; border-radius:50%; border:1.5px solid {{ faq.iconBorder }}; background:{{ faq.iconBg }}; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:18px; color:{{ faq.iconColor }}; transform:{{ faq.iconRotate }};">{{ faq.icon }}</div>
               <div style="font-family:'Cinzel',serif; font-size:17px; line-height:1.5; color:#f5f0e6;">{{ faq.question }}</div>
             </div>
             <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
