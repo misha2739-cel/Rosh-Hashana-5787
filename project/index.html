@@ -254,9 +254,15 @@
 
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+const PAGE_SLUGS = { home: '/', teaching: '/the-teaching', timeline: '/the-timeline', action: '/take-action', faqs: '/faqs', share: '/share' };
+const PATH_TO_PAGE = Object.fromEntries(Object.entries(PAGE_SLUGS).map(([k, v]) => [v, k]));
+function pageFromPath(pathname) {
+  const path = (pathname || '/').replace(/\/+$/, '') || '/';
+  return PATH_TO_PAGE[path] || 'home';
+}
 class Component extends DCLogic {
   state = {
-    page: 'home',
+    page: typeof window !== 'undefined' ? pageFromPath(window.location.pathname) : 'home',
     checked: {},
     commitmentText: '',
     name: '',
@@ -351,7 +357,19 @@ class Component extends DCLogic {
     return selected;
   }
 
-  setPage(p) { this.setState({ page: p }); }
+  componentDidMount() {
+    if (typeof window === 'undefined') return;
+    window.addEventListener('popstate', () => {
+      this.setPage(pageFromPath(window.location.pathname), false);
+    });
+  }
+  setPage(p, push = true) {
+    if (push && typeof window !== 'undefined') {
+      const url = PAGE_SLUGS[p] || '/';
+      if (window.location.pathname !== url) window.history.pushState({ page: p }, '', url);
+    }
+    this.setState({ page: p });
+  }
   toggleCheck(id) {
     this.setState(s => ({ checked: { ...s.checked, [id]: !s.checked[id] } }));
   }
