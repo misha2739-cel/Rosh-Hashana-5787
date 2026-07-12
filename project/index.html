@@ -28,6 +28,8 @@
     }
     .hero-eyebrow { font-size:clamp(11px, 3vw, 15px); letter-spacing:clamp(0.12em, 1.5vw, 0.28em); }
     .hero-title { font-size:clamp(32px, 9vw, 56px); }
+    .modal-backdrop { position:fixed; inset:0; z-index:100; background:rgba(10,8,6,0.72); display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeUp 0.25s ease; }
+    .modal-card { max-width:440px; width:100%; background:#1c1712; border:1px solid #3a3025; border-radius:6px; padding:32px 28px; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,0.5); }
   </style>
 </helmet>
 
@@ -42,6 +44,17 @@
       </sc-for>
     </div>
   </div>
+
+  <!-- EMAIL SENT MODAL -->
+  <sc-if value="{{ showEmailModal }}" hint-placeholder-val="{{ false }}">
+    <div class="modal-backdrop" onClick="{{ closeEmailModal }}">
+      <div class="modal-card" onClick="{{ stopPropagation }}">
+        <div style="font-family:'Cinzel',serif; font-size:20px; color:#e8d9a8; margin-bottom:14px;">An email with your Commitment Certificate has just been sent.</div>
+        <div style="font-size:13px; color:#b9ae9c; font-weight:300; margin-bottom:26px;">NOTE: Please check the Spam folder.</div>
+        <div onClick="{{ closeEmailModal }}" style="cursor:pointer; display:inline-block; padding:12px 26px; background:#c9a24b; color:#14110d; font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.06em; border-radius:2px;">Got it</div>
+      </div>
+    </div>
+  </sc-if>
 
   <!-- HOME -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
@@ -269,6 +282,7 @@ class Component extends DCLogic {
     dateVal: this.todayISO(),
     email: '',
     submitMessage: '',
+    showEmailModal: false,
     openFaqs: {},
   };
 
@@ -396,12 +410,13 @@ class Component extends DCLogic {
       if (data.emailSent === false) {
         this.setState({ submitMessage: 'Your commitment has been saved, but the email could not be sent. Please try again later.' });
       } else {
-        this.setState({ submitMessage: 'Your commitment has been saved. Check your email for your certificate. Shabbat Shalom.' });
+        this.setState({ submitMessage: 'Your commitment has been saved. Check your email for your certificate. Shabbat Shalom.', showEmailModal: true });
       }
     } catch (err) {
       this.setState({ submitMessage: 'Something went wrong — please try again.' });
     }
   }
+  closeEmailModal() { this.setState({ showEmailModal: false }); }
   toggleFaq(id) {
     this.setState(s => ({ openFaqs: { ...s.openFaqs, [id]: !s.openFaqs[id] } }));
   }
@@ -506,6 +521,9 @@ class Component extends DCLogic {
       setEmail: (e) => this.setState({ email: e.target.value }),
       submitCommitment: () => this.submitCommitment(),
       submitMessage: this.state.submitMessage,
+      showEmailModal: this.state.showEmailModal,
+      closeEmailModal: () => this.closeEmailModal(),
+      stopPropagation: (e) => e.stopPropagation(),
     };
   }
 }
