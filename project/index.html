@@ -70,9 +70,13 @@
 
       <div style="max-width:900px; margin:60px auto 0; padding:0 32px;">
         <div style="position:relative; aspect-ratio:16/9; border-radius:4px; overflow:hidden; border:1px solid #3a3025;">
-          <iframe id="yt-player" src="https://www.youtube.com/embed/eaqJ3NGQilE?autoplay=1&mute=1&playsinline=1&enablejsapi=1&rel=0&cc_load_policy=0" title="Rosh Hashanah 5787 campaign message" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe id="yt-player" src="https://www.youtube.com/embed/eaqJ3NGQilE?autoplay=1&mute=1&playsinline=1&rel=0&cc_load_policy=0" title="Rosh Hashanah 5787 campaign message" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           <sc-if value="{{ showVideoOverlay }}" hint-placeholder-val="{{ true }}">
-            <div onClick="{{ handleVideoClick }}" style="position:absolute; inset:0; cursor:pointer; background:transparent;"></div>
+            <div onClick="{{ handleVideoClick }}" style="position:absolute; inset:0; cursor:pointer; background:transparent; display:flex; align-items:flex-end; justify-content:center; padding-bottom:22px;">
+              <div style="display:flex; align-items:center; gap:8px; padding:9px 18px; background:rgba(20,17,13,0.82); border:1px solid #c9a24b; border-radius:24px; color:#f5f0e6; font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:0.05em; backdrop-filter:blur(4px); box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+                <span style="font-size:16px; line-height:1;">🔇</span> Tap for Sound &amp; Subtitles
+              </div>
+            </div>
           </sc-if>
         </div>
       </div>
@@ -415,39 +419,7 @@ class Component extends DCLogic {
     window.addEventListener('popstate', () => {
       this.setPage(pageFromPath(window.location.pathname), false);
     });
-    this.initYouTubePlayer();
-  }
-
-  initYouTubePlayer() {
-    const create = () => {
-      if (this.ytPlayer || !window.YT || !window.YT.Player) return;
-      this.ytPlayer = new window.YT.Player('yt-player', {
-        events: {
-          onReady: () => {
-            this.ytPlayerReady = true;
-            if (this.pendingVideoAction) {
-              this.pendingVideoAction();
-              this.pendingVideoAction = null;
-            }
-          },
-        },
-      });
-    };
-    if (window.YT && window.YT.Player) {
-      create();
-      return;
-    }
-    const prevReady = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      if (typeof prevReady === 'function') prevReady();
-      create();
-    };
-    if (!document.getElementById('yt-iframe-api')) {
-      const s = document.createElement('script');
-      s.id = 'yt-iframe-api';
-      s.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(s);
-    }
+    this.videoStartedAt = Date.now();
   }
 
   detectCaptionLanguage() {
@@ -463,20 +435,25 @@ class Component extends DCLogic {
 
   handleVideoClick() {
     this.setState({ showVideoOverlay: false });
+    if (typeof document === 'undefined') return;
+    const iframe = document.getElementById('yt-player');
+    if (!iframe) return;
     const lang = this.detectCaptionLanguage();
-    const run = () => {
-      if (!this.ytPlayer) return;
-      try {
-        this.ytPlayer.unMute();
-        if (lang) {
-          this.ytPlayer.loadModule && this.ytPlayer.loadModule('captions');
-          this.ytPlayer.setOption('captions', 'track', { languageCode: lang });
-        }
-        this.ytPlayer.playVideo();
-      } catch (e) {}
-    };
-    if (this.ytPlayerReady) run();
-    else this.pendingVideoAction = run;
+    const elapsed = this.videoStartedAt ? Math.max(0, Math.floor((Date.now() - this.videoStartedAt) / 1000)) : 0;
+    const params = new URLSearchParams({
+      autoplay: '1',
+      mute: '0',
+      playsinline: '1',
+      rel: '0',
+      start: String(elapsed),
+    });
+    if (lang) {
+      params.set('cc_load_policy', '1');
+      params.set('cc_lang_pref', lang);
+    }
+    // Reloading the iframe (rather than a postMessage unMute) ties the audio
+    // unlock directly to this click, so browsers reliably allow unmuted play.
+    iframe.src = 'https://www.youtube.com/embed/eaqJ3NGQilE?' + params.toString();
   }
   setPage(p, push = true) {
     if (push && typeof window !== 'undefined') {
