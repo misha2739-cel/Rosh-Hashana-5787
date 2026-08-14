@@ -70,7 +70,10 @@
 
       <div style="max-width:900px; margin:60px auto 0; padding:0 32px;">
         <div style="position:relative; aspect-ratio:16/9; border-radius:4px; overflow:hidden; border:1px solid #3a3025;">
-          <iframe src="https://www.youtube.com/embed/eaqJ3NGQilE" title="Rosh Hashanah 5787 campaign message" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe id="yt-player" src="https://www.youtube.com/embed/eaqJ3NGQilE?autoplay=1&mute=1&playsinline=1&enablejsapi=1&rel=0&cc_load_policy=0" title="Rosh Hashanah 5787 campaign message" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <sc-if value="{{ showVideoOverlay }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ handleVideoClick }}" style="position:absolute; inset:0; cursor:pointer; background:transparent;"></div>
+          </sc-if>
         </div>
       </div>
 
@@ -302,6 +305,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const PAGE_SLUGS = { home: '/', teaching: '/teaching', timeline: '/timeline', action: '/take-action', faqs: '/faqs', share: '/share' };
+const YT_CAPTION_LANGS = { en: 'en', fr: 'fr', he: 'iw', ru: 'ru', es: 'es' };
 const PATH_TO_PAGE = Object.fromEntries(Object.entries(PAGE_SLUGS).map(([k, v]) => [v, k]));
 function pageFromPath(pathname) {
   const path = (pathname || '/').replace(/\/+$/, '') || '/';
@@ -318,6 +322,7 @@ class Component extends DCLogic {
     submitMessage: '',
     showEmailModal: false,
     openFaqs: {},
+    showVideoOverlay: true,
   };
 
   todayISO() {
@@ -410,6 +415,68 @@ class Component extends DCLogic {
     window.addEventListener('popstate', () => {
       this.setPage(pageFromPath(window.location.pathname), false);
     });
+    this.initYouTubePlayer();
+  }
+
+  initYouTubePlayer() {
+    const create = () => {
+      if (this.ytPlayer || !window.YT || !window.YT.Player) return;
+      this.ytPlayer = new window.YT.Player('yt-player', {
+        events: {
+          onReady: () => {
+            this.ytPlayerReady = true;
+            if (this.pendingVideoAction) {
+              this.pendingVideoAction();
+              this.pendingVideoAction = null;
+            }
+          },
+        },
+      });
+    };
+    if (window.YT && window.YT.Player) {
+      create();
+      return;
+    }
+    const prevReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (typeof prevReady === 'function') prevReady();
+      create();
+    };
+    if (!document.getElementById('yt-iframe-api')) {
+      const s = document.createElement('script');
+      s.id = 'yt-iframe-api';
+      s.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(s);
+    }
+  }
+
+  detectCaptionLanguage() {
+    const langs = (typeof navigator !== 'undefined' && navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [typeof navigator !== 'undefined' ? navigator.language : ''];
+    for (const l of langs) {
+      const code = (l || '').slice(0, 2).toLowerCase();
+      if (YT_CAPTION_LANGS[code]) return YT_CAPTION_LANGS[code];
+    }
+    return null;
+  }
+
+  handleVideoClick() {
+    this.setState({ showVideoOverlay: false });
+    const lang = this.detectCaptionLanguage();
+    const run = () => {
+      if (!this.ytPlayer) return;
+      try {
+        this.ytPlayer.unMute();
+        if (lang) {
+          this.ytPlayer.loadModule && this.ytPlayer.loadModule('captions');
+          this.ytPlayer.setOption('captions', 'track', { languageCode: lang });
+        }
+        this.ytPlayer.playVideo();
+      } catch (e) {}
+    };
+    if (this.ytPlayerReady) run();
+    else this.pendingVideoAction = run;
   }
   setPage(p, push = true) {
     if (push && typeof window !== 'undefined') {
@@ -558,6 +625,8 @@ class Component extends DCLogic {
       showEmailModal: this.state.showEmailModal,
       closeEmailModal: () => this.closeEmailModal(),
       stopPropagation: (e) => e.stopPropagation(),
+      showVideoOverlay: this.state.showVideoOverlay,
+      handleVideoClick: () => this.handleVideoClick(),
     };
   }
 }
