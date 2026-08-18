@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "static-site",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8787", "--directory", "project"],
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "-s", "-l", "8787", "project"],
       "port": 8787
     }
   ]
